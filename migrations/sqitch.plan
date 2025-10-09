@@ -1,0 +1,4 @@
+%syntax-version=1.0.0
+%project=myBank
+
+01.init_db 2025-10-09T12:44:12Z Damien Ancelin <ancelin.damien@gmail.com> # init myBank database
