@@ -1,0 +1,94 @@
+@startuml
+skinparam linetype ortho
+
+entity app_user {
+  id         : INT            <<PK, NOT NULL>>
+  --
+  email      : TEXT           <<NOT NULL, UNIQUE>>
+  password   : TEXT           <<NOT NULL>>
+  lastname   : TEXT           <<NOT NULL>>
+  firstname  : TEXT           <<NOT NULL>>
+  created_at : TIMESTAMPTZ    <<NOT NULL, DEFAULT NOW()>>
+  updated_at : TIMESTAMPTZ
+}
+
+entity category{
+  id         : INT            <<PK, NOT NULL>>
+  --
+  name       : TEXT           <<NOT NULL>>
+  created_at : TIMESTAMPTZ    <<NOT NULL, DEFAULT NOW()>>
+  updated_at : TIMESTAMPTZ
+}
+
+entity operation_type{
+  id         : INT            <<PK, NOT NULL>>
+  --
+  name       : TEXT           <<NOT NULL>>
+  created_at : TIMESTAMPTZ    <<NOT NULL, DEFAULT NOW()>>
+  updated_at : TIMESTAMPTZ
+}
+
+entity loan{
+  id                 : INT            <<PK, NOT NULL>>
+  --
+  amount             : DECIMAL(12,2)  <<NOT NULL>>
+  interest_rate      : DECIMAL(5,2)   <<NOT NULL>>
+  monthly_payment    : DECIMAL(12,2)  <<NOT NULL>>
+  remaining          : DECIMAL(12,2)  <<NOT NULL>>
+  start_date         : TIMESTAMPTZ    <<NOT NULL>>
+  estimated_end_date : TIMESTAMPTZ    <<NOT NULL>>
+  status             : TEXT           <<NOT NULL>>
+  app_user_id        : INT            <<FK, NOT NULL>>
+  created_at         : TIMESTAMPTZ    <<NOT NULL, DEFAULT NOW()>>
+  updated_at         : TIMESTAMPTZ
+}
+
+entity account{
+  id            : INT            <<PK, NOT NULL>>
+  --
+  IBAN          : VARCHAR(34)    <<NOT NULL, UNIQUE>>
+  interest_rate : DECIMAL(5,2)   <<NOR NULL, DEFAULT 0>>
+  account_type  : TEXT           <<NOT NULL>>
+  currency      : VARCHAR(3)     <<NOT NULL>>
+  limit         : DECIMAL(12,2)  <<NOT NULL>>
+  balance       : DECIMAL(12,2)  <<NOT NULL>>
+  status        : TEXT           <<NOT NULL>>
+  app_user_id   : INT            <<FK, NOT NULL>>
+  created_at    : TIMESTAMPTZ    <<NOT NULL, DEFAULT NOW()>>
+  updated_at    : TIMESTAMPTZ
+}
+
+entity transaction{
+  id              : INT            <<PK, NOT NULL>>
+  --
+  label           : TEXT           <<NOT NULL>>
+  amount          : DECIMAL(12,2)  <<NOT NULL>>
+  status          : TEXT           <<NOT NULL>>
+  app_user_id     : INT            <<FK, NOT NULL>>
+  loan_id         : INT            <<FK>>
+  account_id      : INT            <<FK>>
+  counterparty_id : INT            <<FK>>
+  operation_id    : INT            <<FK, NOT NULL>>
+  category_id     : INT            <<FK, NOT NULL>>
+  created_at      : TIMESTAMPTZ    <<NOT NULL, DEFAULT NOW()>>
+  updated_at      : TIMESTAMPTZ
+}
+
+entity counterparty {
+  id         : INT            <<PK, NOT NULL>>
+  --
+  name       : TEXT           <<NOT NULL>>
+  IBAN       : VARCHAR(34)    <<NOT NULL, UNIQUE>>
+  BIC        : VARCHAR(11)    <<NOT NULL>>
+  created_at : TIMESTAMPTZ    <<NOT NULL, DEFAULT NOW()>>
+  updated_at : TIMESTAMPTZ
+}
+
+category ||--o{ transaction
+operation_type ||--o{ transaction
+counterparty ||--o{ transaction
+loan ||--o{ transaction
+account ||--o{ transaction
+app_user ||--o{ transaction
+loan ||--o{ app_user
+account ||--o{ app_user
