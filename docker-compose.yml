@@ -1,0 +1,12 @@
+services:
+  mybank-db:
+    image: postgres:16
+    container_name: mybank-db
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - ./data:/docker-entrypoint-initdb.d
+      - mybank-pg-data:/var/lib/postgresql/data
