@@ -1,0 +1,11 @@
+{
+    "name": "damien/my-bank",
+    "description": "Simple bank app",
+    "authors": [
+        {
+            "name": "damien",
+            "email": "ancelin.damien@gmail.com"
+        }
+    ],
+    "require": {}
+}
