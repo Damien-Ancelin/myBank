@@ -2,3 +2,4 @@
 %project=myBank
 
 01.init_db 2025-10-09T12:44:12Z Damien Ancelin <ancelin.damien@gmail.com> # init myBank database
+02.seeding 2025-10-09T14:36:27Z Damien Ancelin <ancelin.damien@gmail.com> # seeding database
