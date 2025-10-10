@@ -5,7 +5,7 @@ BEGIN;
 ALTER TABLE "loan"
   ADD COLUMN "remaining_month" INT;
 
-CREATE FUNCTION calculate_remaining_month(end_date TIMESTAMPTZ, loan_id INT)
+CREATE FUNCTION calculate_remaining_month(loan_id INT)
 RETURNS INT AS $$
   BEGIN
     RETURN (SELECT (DATE_PART('year', AGE(loan.end_date, NOW())) * 12 +
@@ -19,6 +19,6 @@ $$ LANGUAGE plpgsql;
 -- DATE_PART target year, multiply by number of month in one year, or month to get only the number of month
 
 UPDATE "loan"
-  SET "remaining_month" = calculate_remaining_month("end_date", "id");
+  SET "remaining_month" = calculate_remaining_month("id");
 
 COMMIT;

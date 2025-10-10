@@ -2,6 +2,6 @@
 
 BEGIN;
 
-SELECT "end_date" FROM loan;
+SELECT * FROM "loan" WHERE "end_date" IS NOT NULL;
 
 ROLLBACK;

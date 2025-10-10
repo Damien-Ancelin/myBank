@@ -2,6 +2,6 @@
 
 BEGIN;
 
-SELECT "remaining_month" FROM loan;
+SELECT * FROM "loan" WHERE "remaining_month" IS NOT NULL;
 
 ROLLBACK;

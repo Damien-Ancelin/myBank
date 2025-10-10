@@ -2,6 +2,6 @@
 
 BEGIN;
 
-SELECT "total_payment" FROM loan;
+SELECT * FROM "loan" WHERE "total_payment" IS NOT NULL;
 
 ROLLBACK;

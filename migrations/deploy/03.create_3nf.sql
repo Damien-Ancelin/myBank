@@ -7,7 +7,7 @@ BEGIN;
 ALTER TABLE "loan"
   ADD COLUMN "end_date" TIMESTAMPTZ;
 
-CREATE FUNCTION calculate_end_date(start_date TIMESTAMPTZ, duration INT, loan_id INT)
+CREATE FUNCTION calculate_end_date(loan_id INT)
 RETURNS TIMESTAMPTZ AS $$
   BEGIN
     RETURN (SELECT loan.start_date + (loan.duration || ' months')::INTERVAL
@@ -17,6 +17,6 @@ RETURNS TIMESTAMPTZ AS $$
 $$ LANGUAGE plpgsql;
 
 UPDATE "loan"
-  SET "end_date" = calculate_end_date("start_date", "duration", "id");
+  SET "end_date" = calculate_end_date("id");
 
 COMMIT;
