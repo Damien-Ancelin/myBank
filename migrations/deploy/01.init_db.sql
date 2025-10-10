@@ -37,18 +37,6 @@ CREATE TABLE "app_user" (
   "updated_at" TIMESTAMPTZ
 );
 
-/*
-    ALTER TABLE LOAN
-
-    FUNCTION - TRIGGER - VIEW ?
-
-    1. add "end date" calculation = start_date + duration months
-    2. add "total-payment" calculation = amount + (amount * interest_rate * duration)
-    3. add "monthly-payment" calculation = total-payment / duration
-    4. add "remaining time" calculation = end_date - now()
-    5. add "remaining amount" calculation = total-payment - (monthly-payment * (end_date - now() in months))
-*/
-
 CREATE TABLE "loan" (
   "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   "amount" unsigned_decimal NOT NULL,
