@@ -9,7 +9,7 @@ CREATE FUNCTION calculate_monthly_payment(loan_id INT)
 RETURNS DECIMAL(12, 2) AS $$
   BEGIN
     RETURN (
-      SELECT loan.total_payment / loan.duration
+      SELECT calculate_total_payment(loan_id) / loan.duration
       FROM "loan"
       WHERE "id" = loan_id
     );

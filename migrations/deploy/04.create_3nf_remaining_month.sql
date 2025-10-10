@@ -8,8 +8,8 @@ ALTER TABLE "loan"
 CREATE FUNCTION calculate_remaining_month(loan_id INT)
 RETURNS INT AS $$
   BEGIN
-    RETURN (SELECT (DATE_PART('year', AGE(loan.end_date, NOW())) * 12 +
-    DATE_PART('month', AGE(loan.end_date, NOW()))) 
+    RETURN (SELECT (DATE_PART('year', AGE(calculate_end_date(loan_id), NOW())) * 12 +
+    DATE_PART('month', AGE(calculate_end_date(loan_id), NOW()))) 
       FROM "loan"
       WHERE "id" = loan_id);
   END;

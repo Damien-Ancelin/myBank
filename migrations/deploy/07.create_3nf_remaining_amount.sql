@@ -9,9 +9,7 @@ CREATE FUNCTION calculate_remaining_amount(loan_id INT)
 RETURNS DECIMAL(12, 2) AS $$
   BEGIN
     RETURN (
-      SELECT loan.remaining_month * loan.monthly_payment
-      FROM "loan"
-      WHERE "id" = loan_id
+      SELECT calculate_remaining_month(loan_id) * calculate_monthly_payment(loan_id)
     );
   END;
 $$ LANGUAGE plpgsql;
