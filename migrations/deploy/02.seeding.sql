@@ -56,7 +56,12 @@ VALUES
 INSERT INTO loan ("amount", "interest_rate", "start_date", "duration", "status", "user_id")
 VALUES
 (1000, 5.0, NOW() - INTERVAL '6 months', 12, 'active', 1),
-(5000, 3.5, NOW() - INTERVAL '3 months', 24, 'pending', 2);
+(5000, 3.5, NOW() - INTERVAL '3 months', 24, 'pending', 2),
+(2500, 4.2, NOW() - INTERVAL '1 year', 36, 'active', 3),
+(800, 6.0, NOW() - INTERVAL '2 months', 10, 'pending', 1),
+(12000, 2.9, NOW() - INTERVAL '2 years', 60, 'active', 2),
+(300, 7.5, NOW() - INTERVAL '15 days', 6, 'pending', 3),
+(4500, 3.8, NOW() - INTERVAL '8 months', 24, 'active', 1);
 
 -- 7️⃣ Transactions
 INSERT INTO "transaction" ("label", "amount", "status", "user_id", "account_id", "counterparty_id", "category_id", "operation_type_id")

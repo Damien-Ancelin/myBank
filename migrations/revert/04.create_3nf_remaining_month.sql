@@ -2,6 +2,8 @@
 
 BEGIN;
 
+DROP FUNCTION calculate_remaining_month;
+
 ALTER TABLE loan
   DROP COLUMN remaining_month;
 

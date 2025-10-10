@@ -2,6 +2,9 @@
 
 BEGIN;
 
-DROP COLUMN total_payment;
+DROP FUNCTION calculate_total_payment;
+
+ALTER TABLE loan
+  DROP COLUMN total_payment;
 
 COMMIT;
