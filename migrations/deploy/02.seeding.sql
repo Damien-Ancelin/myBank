@@ -10,12 +10,12 @@ VALUES
 ('carol@example.com', 'test', 'Carol', 'Moreau');
 
 -- 2️⃣ Comptes
-INSERT INTO account ("IBAN", "interest_rate", "account_type", "currency", "limit", "balance", "user_id")
+INSERT INTO account ("IBAN", "interest_rate", "account_type", "currency", "limit", "start_date", "balance", "user_id")
 VALUES
-('FR7612345678901234567890123', 0.0, 'checking', 'EUR', 1000, 500, 1),
-('FR7612345678901234567890124', 5.25, 'savings', 'EUR', 5000, 1500, 1),
-('FR7612345678901234567890125', 0.0, 'checking', 'EUR', 2000, 800, 2),
-('FR7612345678901234567890126', 2.5, 'savings', 'EUR', 3000, 1200, 3);
+('FR7612345678901234567890123', 0.0, 'checking', 'EUR', 1000, NOW() - INTERVAL '6 months', 500, 1),
+('FR7612345678901234567890124', 5.25, 'savings', 'EUR', 5000, NOW() - INTERVAL '4 months', 1500, 1),
+('FR7612345678901234567890125', 0.0, 'checking', 'EUR', 2000, NOW() - INTERVAL '10 months', 800, 2),
+('FR7612345678901234567890126', 2.5, 'savings', 'EUR', 3000, NOW() - INTERVAL '2 years', 1200, 3);
 
 -- 3️⃣ Tiers
 INSERT INTO counterparty ("IBAN", "BIC")

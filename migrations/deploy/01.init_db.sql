@@ -68,6 +68,7 @@ CREATE TABLE "account" (
   "account_type" account_type_enum NOT NULL DEFAULT 'checking',
   "currency" CHAR(3) NOT NULL DEFAULT 'EUR',
   "limit" unsigned_decimal NOT NULL,
+  "start_date" TIMESTAMPTZ NOT NULL,
   "balance" unsigned_decimal NOT NULL DEFAULT 0,
   "status" account_status_enum NOT NULL DEFAULT 'active',
   "user_id" INT NOT NULL REFERENCES "app_user"("id") ON DELETE CASCADE,
