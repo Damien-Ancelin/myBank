@@ -8,3 +8,5 @@ sqitch deploy 03.create_3nf
 sqitch verify 03.create_3nf
 sqitch deploy 04.create_3nf_remaining_month
 sqitch verify 04.create_3nf_remaining_month
+sqitch deploy 05.create_3fn_total_payment
+sqitch verify 05.create_3fn_total_payment

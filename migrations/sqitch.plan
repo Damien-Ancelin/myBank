@@ -5,3 +5,4 @@
 02.seeding 2025-10-09T14:36:27Z Damien Ancelin <ancelin.damien@gmail.com> # seeding database
 03.create_3nf 2025-10-10T07:18:36Z Damien Ancelin <ancelin.damien@gmail.com> # Create 3nf for loan
 04.create_3nf_remaining_month 2025-10-10T08:42:41Z Damien Ancelin <ancelin.damien@gmail.com> # create 3nf for remaining months
+05.create_3fn_total_payment 2025-10-10T09:08:45Z Damien Ancelin <ancelin.damien@gmail.com> # create migration for total loan payment
