@@ -14,3 +14,5 @@ sqitch deploy 06.create_3fn_monthly_payment
 sqitch verify 06.create_3fn_monthly_payment
 sqitch deploy 07.create_3nf_remaining_amount
 sqitch verify 07.create_3nf_remaining_amount
+sqitch deploy 08.trigger_for_3nf
+sqitch verify 08.trigger_for_3nf

@@ -8,3 +8,4 @@
 05.create_3fn_total_payment 2025-10-10T09:08:45Z Damien Ancelin <ancelin.damien@gmail.com> # create migration for total loan payment
 06.create_3fn_monthly_payment 2025-10-10T09:50:53Z Damien Ancelin <ancelin.damien@gmail.com> # create function to calculate monthly payment
 07.create_3nf_remaining_amount 2025-10-10T09:59:46Z Damien Ancelin <ancelin.damien@gmail.com> # create function to calculate reamining loan amount
+08.trigger_for_3nf 2025-10-10T10:14:55Z Damien Ancelin <ancelin.damien@gmail.com> # create trigger to add 3nf column to insert or update
