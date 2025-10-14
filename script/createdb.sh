@@ -1,1 +1,0 @@
-createdb myBank_db

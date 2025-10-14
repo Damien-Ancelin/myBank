@@ -1,1 +1,0 @@
-dropdb myBank_db

@@ -13,60 +13,22 @@ This project provides a PostgreSQL database schema and migration system for a ba
 - 💸 Loan tracking
 - 📈 Transaction history
 - 🏷️ Category and operation types
+- 🐳 Docker deployment
 
 ## Tech Stack 🛠️
 
-- 🐘 PostgreSQL
+- 🐘 PostgreSQL 16
 - 🦑 Sqitch (database migrations)
+- 🐳 Docker & Docker Compose
 - 🐘 PHP (for the application logic, not included here)
 
 ## Getting Started 🚀
 
-### Setting up a Local Dev Environment ⚙️
-
-> *Environment variables in Linux are variables that store configuration. Each time you start a shell session, the system loads these variables from config files to set up your environment.*
-
-#### 🐘 PostgreSQL expects environment variables (like PGUSER) to be set in your Linux environment (e.g., in `.bashrc` or `.zshrc`)
-
-##### 🐚 Check your environment variables
-
-- `env` — shows all environment variables
-- `echo $USER` — shows your Linux username
-- `echo $PGUSER` — shows your PostgreSQL user (if set)
-- `echo $0` — shows your shell type (bash/zsh)
-
-##### 🪄 Create a PostgreSQL SUPERUSER
-
-1. Edit your shell config file:
-   - `code ~/.bashrc` (or `code ~/.zshrc`)
-   - Add: `export PGUSER=<your_linux_user>`
-   - Save and reload: `source ~/.bashrc` (or `source ~/.zshrc`)
-   - Check: `echo $PGUSER` (should show your user)
-2. Enter Postgres as the postgres user:
-   - `sudo -i -u postgres`
-   - `psql`
-3. Create your superuser:
-   - `CREATE ROLE <your_linux_user> WITH SUPERUSER LOGIN PASSWORD '<your_password>';`
-   - List roles: `\du`
-4. Try connecting directly:
-   - `psql` (should connect as your user)
-   - If you get an error about the database not existing, create it:
-     - `createdb <your_linux_user>`
-5. (Optional, for dev only) Set local trust authentication:
-   - `sudo nano /etc/postgresql/<version>/main/pg_hba.conf`
-   - Change METHOD to `trust` for local connections (⚠️ Not for production!)
-   - Restart Postgres: `sudo systemctl restart postgresql`
-
-Now you should be able to run `psql` and `createdb` without a password prompt, and Sqitch will work locally.
-
-> ⚠️ **NEVER set trust authentication on a production server!**
-
----
-
 ### Prerequisites
 
-- 🐘 PostgreSQL
+- 🐘 PostgreSQL 16
 - 🦑 Sqitch
+- 🐳 Docker & Docker Compose
 
 ### Setup
 
@@ -77,46 +39,75 @@ Now you should be able to run `psql` and `createdb` without a password prompt, a
    cd myBank
    ```
 
-2. **Install Sqitch dependencies**
+2. **Install Sqitch**
 
    ```bash
+   # On macOS with Homebrew
+   brew install sqitch
+
    # On Debian/Ubuntu
    sudo apt update
    sudo apt install sqitch libdbd-pg-perl postgresql-client
    ```
 
-3. **Configure your database connection**
+3. **Create environment file**
 
-   Edit `sqitch.conf` if needed:
+   ```bash
+   # Create .env file from example
+   cp .env.example .env
+
+   # Or create manually
+   cat > .env << EOF
+   POSTGRES_DB=mybank
+   POSTGRES_USER=mybank_user
+   POSTGRES_PASSWORD=mybank_password
+   POSTGRES_PORT=5432
+   EOF
+   ```
+
+4. **Start PostgreSQL with Docker**
+
+   ```bash
+   docker-compose up -d
+   ```
+
+5. **Configure Sqitch (optional)**
+
+   The `sqitch.conf` file is already configured with the complete URI:
 
    ```ini
    [core]
       engine = pg
       top_dir = migrations
-      # plan_file = migrations/sqitch.plan
    [engine "pg"]
-      target = db:pg:<your_db_name>
-      # registry = sqitch
-      # client = psql
+      target = db:pg://mybank_user:mybank_password@localhost:5432/mybank
+      registry = sqitch
+      client = psql
    ```
 
-4. **Deploy the database schema and seed data**
+6. **Deploy the database schema**
 
    ```bash
-   sqitch deploy db:pg:<your_db_name>
+   sqitch deploy
    ```
 
-5. **Verify the deployment**
+7. **Verify the deployment**
 
    ```bash
-   sqitch verify db:pg:<your_db_name>
+   sqitch verify
    ```
 
-6. **Reset the database (dev only)**
+8. **Reset the database (development only)**
 
    ```bash
-   bash ./script/resetdb.sh
+   sqitch revert && sqitch deploy && sqitch verify
    ```
+
+## Sqitch Commands 🦑
+
+### Available Targets
+
+- `db:pg://mybank_user:mybank_password@localhost:5432/mybank`: Complete URI
 
 ## Folder Structure 📁
 
