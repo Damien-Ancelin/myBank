@@ -29,7 +29,7 @@
       $this->db_port = $_ENV['DB_PORT'];
       $this->db_name = $_ENV['DB_NAME'];
       $this->db_user = $_ENV['DB_USER'];
-      $this->db_password = $_ENV['DB_PASS'];
+      $this->db_password = $_ENV['DB_PASSWORD'];
       $this->dsn = "pgsql:host={$this->db_host};port={$this->db_port};dbname={$this->db_name}";
     }
 
@@ -47,8 +47,36 @@
         throw new Exception("Database connection failed: {$e->getMessage()}");
       }
     }
+
+    public function getAccount(int $user_id)
+    {
+      try {
+        $pdo = self::connect();
+        $query = $pdo->prepare('SELECT * FROM account WHERE user_id = :id');
+        $query->execute([
+          ':id' => $user_id
+        ]);
+        $results = $query->fetchAll();
+        return $results;
+      } catch (PDOException $e) {
+        throw new Exception("Error during query for getAccount.");
+      }
+    }
+
+    public function getLoan(int $user_id)
+    {
+      try {
+        $pdo = self::connect();
+        $query = $pdo->prepare('SELECT * FROM loan_summary WHERE user_id = :id');
+        $query->execute([
+          ':id' => $user_id
+        ]);
+        $results = $query->fetchAll();
+        return $results;
+      } catch (PDOException $e) {
+        throw new Exception("Error during query for getLoan.");
+      }
+    }
   }
-
-
 
 ?>
