@@ -12,6 +12,15 @@
             "email": "ancelin.damien@gmail.com"
         }
     ],
+    "scripts": {
+        "start": "php -S localhost:8000 -t src/public",
+        "docker:up": "docker compose up -d --build",
+        "docker:down": "docker compose down -v",
+        "sqitch:deploy": "sqitch deploy",
+        "sqitch:verify": "sqitch verify",
+        "sqitch:revert": "sqitch revert",
+        "sqitch:reset-db": "sqitch revert && sqitch deploy && sqitch verify"
+    },
     "require": {
         "vlucas/phpdotenv": "^5.6"
     }

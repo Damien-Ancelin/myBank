@@ -70,7 +70,7 @@ This project provides a PostgreSQL database schema and migration system for a ba
 4. **Start PostgreSQL with Docker**
 
    ```bash
-   docker-compose up -d
+   composer docker:up
    ```
 
 5. **Configure Sqitch (optional)**
@@ -87,22 +87,30 @@ This project provides a PostgreSQL database schema and migration system for a ba
       client = psql
    ```
 
+   *Note: Use port `5433` if `5432` is already in use.*
+
 6. **Deploy the database schema**
 
    ```bash
-   sqitch deploy
+   composer sqitch:deploy
    ```
 
 7. **Verify the deployment**
 
    ```bash
-   sqitch verify
+   composer sqitch:verify
    ```
 
-8. **Reset the database (development only)**
+8. **Revert the last change (if needed)**
 
    ```bash
-   sqitch revert && sqitch deploy && sqitch verify
+   composer sqitch:revert
+   ```
+
+9. **Reset the database (development only)**
+
+   ```bash
+   composer sqitch:reset-db
    ```
 
 ## Sqitch Commands 🦑
@@ -110,6 +118,7 @@ This project provides a PostgreSQL database schema and migration system for a ba
 ### Available Targets
 
 - `db:pg://mybank_user:mybank_password@localhost:5432/mybank`: Complete URI
+- *Note: Use port `5433` if `5432` is already in use.*
 
 ## Folder Structure 📁
 
@@ -130,7 +139,7 @@ This project provides a PostgreSQL database schema and migration system for a ba
 4. Run the PHP application:
 
    ```bash
-   php -S localhost:8000 -t src/public
+   composer start
    ```
 
 ## License 📜
