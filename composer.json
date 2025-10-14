@@ -1,11 +1,18 @@
 {
     "name": "damien/my-bank",
-    "description": "Simple bank app",
+    "description": "Simple bank account management system",
+    "autoload": {
+        "psr-4": {
+            "Damien\\MyBank\\": "src/classes/"
+        }
+    },
     "authors": [
         {
             "name": "damien",
             "email": "ancelin.damien@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
 }
