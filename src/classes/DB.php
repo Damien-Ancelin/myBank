@@ -25,11 +25,11 @@
 
     public function __construct()
     {
-      $this->db_host = $_ENV['DB_HOST'];
-      $this->db_port = $_ENV['DB_PORT'];
-      $this->db_name = $_ENV['DB_NAME'];
-      $this->db_user = $_ENV['DB_USER'];
-      $this->db_password = $_ENV['DB_PASSWORD'];
+      $this->db_host = $_ENV['POSTGRES_HOST'] ?? "localhost";
+      $this->db_port = $_ENV['POSTGRES_PORT'];
+      $this->db_name = $_ENV['POSTGRES_DB'];
+      $this->db_user = $_ENV['POSTGRES_USER'];
+      $this->db_password = $_ENV['POSTGRES_PASSWORD'];
       $this->dsn = "pgsql:host={$this->db_host};port={$this->db_port};dbname={$this->db_name}";
     }
 

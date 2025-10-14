@@ -65,6 +65,8 @@ This project provides a PostgreSQL database schema and migration system for a ba
    EOF
    ```
 
+   *Note: Use port `5433` if `5432` is already in use.*
+
 4. **Start PostgreSQL with Docker**
 
    ```bash
@@ -114,6 +116,22 @@ This project provides a PostgreSQL database schema and migration system for a ba
 - `migrations/` : Sqitch migration scripts (deploy, revert, verify)
 - `script/` : Helper scripts for database management
 - `docs/` : Documentation (ERD, MCD, MLD, etc.)
+
+## Launch PHP Application 🚀
+
+1. Ensure you have PHP and Composer installed.
+2. Install dependencies:
+
+   ```bash
+   composer install
+   ```
+
+3. Configure your PHP application to connect to the PostgreSQL database using the credentials in the `.env` file.
+4. Run the PHP application:
+
+   ```bash
+   php -S localhost:8000 -t src/public
+   ```
 
 ## License 📜
 

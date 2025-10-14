@@ -9,8 +9,8 @@ require '../elements/header.php';
 
 <?php
 $database = new DB();
-$accounts = $database->getAccount(2);
-$loans = $database->getLoan(2);
+$accounts = $database->getAccount(1);
+$loans = $database->getLoan(1);
 // echo '<pre>';
 //   print_r($loans);
 // echo '</pre>';
