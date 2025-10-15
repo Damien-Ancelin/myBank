@@ -3,16 +3,18 @@ require dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARAT
 
 use Damien\MyBank\DB;
 
+$title = "Mes comptes | myBank";
+
 require '../utils/formatDate_fx.php';
 require '../elements/header.php';
 ?>
 
 <?php
 $database = new DB();
-$accounts = $database->getAccount(1);
-$loans = $database->getLoan(1);
+$accounts = $database->getAccounts(1);
+$loans = $database->getLoans(1);
 // echo '<pre>';
-//   print_r($loans);
+//   print_r($accounts);
 // echo '</pre>';
 ?>
 
@@ -29,10 +31,15 @@ $loans = $database->getLoan(1);
         <?php else: ?>
           <div class="card text-bg-secondary mb-3">
         <?php endif ?>
-          <div class="card-header">Compte N° <?= $account->id ?> | <?= $account->account_type ?></div>
+          <div class="card-header">
+            <a class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="./account_details.php?user_id=<?= $account->user_id ?>&account_id=<?= $account->id ?>">Compte N° <?= $account->id ?> | <?= $account->account_type ?></a>
+          </div>
           <div class="card-body">
             <h5 class="card-title"><?= $account->balance ?>€</h5>
             <h6 class="card-subtitle mb-2 text-muted">IBAN : <?= $account->IBAN ?></h6>
+            <?php if((int)$account->interest_rate  !== 0): ?>
+              <h6 class="card-subtitle mb-2 text-muted">Intêrets : <?= (int)$account->interest_rate ?> %</h6>
+            <?php endif ?>
             <p class="card-text">plafond : <?= $account->limit ?> €</p>
           </div>
           <div class="card-footer">

@@ -5,6 +5,7 @@
   use \PDOException;
   use \Exception;
   use \Dotenv;
+  use \stdClass;
 
   # env loading
   $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 2));
@@ -48,7 +49,14 @@
       }
     }
 
-    public function getAccount(int $user_id)
+    // ? Account methods
+    /**
+     * Get all accounts for a specific user
+     *
+     * @param int $user_id
+     * @return array|false
+     */
+    public function getAccounts(int $user_id): array|false
     {
       try {
         $pdo = self::connect();
@@ -59,11 +67,41 @@
         $results = $query->fetchAll();
         return $results;
       } catch (PDOException $e) {
-        throw new Exception("Error during query for getAccount.");
+        throw new Exception("Error during query for getAccounts.");
       }
     }
 
-    public function getLoan(int $user_id)
+    /**
+     * Get a specific user's account by user ID and account ID
+     *
+     * @param int $user_id
+     * @param int $account_id
+     * @return array|false
+     */
+    public function getOneUserAccount(int $user_id, int $account_id): stdClass|false
+    {
+      try {
+        $pdo = self::connect();
+        $query = $pdo->prepare('SELECT * FROM account WHERE user_id = :user_id AND id = :account_id');
+        $query->execute([
+          ':user_id' => $user_id,
+          ':account_id' => $account_id
+        ]);
+        $result = $query->fetch();
+        return $result;
+      } catch (PDOException $e) {
+        throw new Exception("Error during query for getUserAccount.");
+      }
+    }
+
+    // ? Loan methods
+    /**
+     * Get all loans for a specific user
+     *
+     * @param int $user_id
+     * @return array|false
+     */
+    public function getLoans(int $user_id): array|false
     {
       try {
         $pdo = self::connect();
@@ -74,8 +112,33 @@
         $results = $query->fetchAll();
         return $results;
       } catch (PDOException $e) {
-        throw new Exception("Error during query for getLoan.");
+        throw new Exception("Error during query for getLoans.");
       }
+    }
+
+    // ? transaction methods
+    public function getTransactionToAccountId(int $user_id, int $account_id): array|false
+    {
+      try{
+        $pdo = self::connect();
+        $query = $pdo->prepare(
+          'SELECT "transaction".*, "account".*, "category"."name" as "category_name", "operation_type"."name" as "operation_name"
+          FROM transaction 
+          JOIN account ON transaction.account_id = account.id
+          JOIN category ON transaction.category_id = category.id
+          JOIN operation_type ON transaction.operation_type_id = operation_type.id
+          WHERE transaction.user_id = :user_id AND account_id = :account_id'
+        );
+        $query->execute([
+          ':user_id' => $user_id,
+          ':account_id' => $account_id,
+        ]);
+        $results = $query->fetchAll();
+        return $results;
+      } catch (PDOException $e) {
+        throw new Exception("Error during query for getTransactionToAccountId.");
+      }
+      return [];
     }
   }
 
