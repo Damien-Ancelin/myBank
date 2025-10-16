@@ -48,8 +48,14 @@
         <tr>
         <th scope="row"><?= $transaction->id ?></th>
         <td><?= $transaction->label ?></td>
-        <td><?= $transaction->amount ?>€</td>
-        <td>????</td>
+        <td class="fw-bold <?= ($transaction->operation_name === 'Remboursement') ? 'text-success' : 'text-danger' ?>"><?= $transaction->amount ?>€</td>
+        <?php if((!$transaction->loan_id) && (!$transaction->counterparty_id)): ?>          
+          <td>Compte N° <?= $transaction->account_id ?></td>
+        <?php elseif ($transaction->counterparty_id && !$transaction->loan_id): ?>
+          <td>IBAN : <?= $transaction->counterparty_iban ?></td>
+        <?php else: ?>
+          <td>Crédit N° <?= $transaction->loan_id ?></td>
+        <?php endif; ?>
         <td><?= $transaction->operation_name ?></td>
         <td><?= $transaction->category_name ?></td>
         <td><?= parseDate($transaction->created_at, true) ?></td>

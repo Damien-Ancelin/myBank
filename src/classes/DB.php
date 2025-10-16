@@ -122,9 +122,10 @@
       try{
         $pdo = self::connect();
         $query = $pdo->prepare(
-          'SELECT "transaction".*, "account".*, "category"."name" as "category_name", "operation_type"."name" as "operation_name"
+          'SELECT "transaction".*, "account".*, "counterparty"."IBAN" as "counterparty_iban", "category"."name" as "category_name", "operation_type"."name" as "operation_name"
           FROM transaction 
           JOIN account ON transaction.account_id = account.id
+          LEFT JOIN counterparty ON transaction.counterparty_id = counterparty.id
           JOIN category ON transaction.category_id = category.id
           JOIN operation_type ON transaction.operation_type_id = operation_type.id
           WHERE transaction.user_id = :user_id AND account_id = :account_id'
@@ -137,6 +138,30 @@
         return $results;
       } catch (PDOException $e) {
         throw new Exception("Error during query for getTransactionToAccountId.");
+      }
+      return [];
+    }
+
+    public function getTransactionToLoanId(int $user_id, int $loan_id): array|false
+    {
+      try{
+        $pdo = self::connect();
+        $query = $pdo->prepare(
+          'SELECT "transaction".*, "loan".*, "category"."name" as "category_name", "operation_type"."name" as "operation_name"
+          FROM transaction 
+          JOIN loan ON transaction.loan_id = loan.id
+          JOIN category ON transaction.category_id = category.id
+          JOIN operation_type ON transaction.operation_type_id = operation_type.id
+          WHERE transaction.user_id = :user_id AND loan_id = :loan_id'
+        );
+        $query->execute([
+          ':user_id' => $user_id,
+          ':loan_id' => $loan_id,
+        ]);
+        $results = $query->fetchAll();
+        return $results;
+      } catch (PDOException $e) {
+        throw new Exception("Error during query for getTransactionToLoanId.");
       }
       return [];
     }

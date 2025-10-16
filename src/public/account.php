@@ -61,7 +61,7 @@ $loans = $database->getLoans(1);
         <?php else: ?>
           <div class="card text-bg-secondary mb-3">
         <?php endif ?>
-          <div class="card-header">Crédit N° <?= $loan->id ?></div>
+          <div class="card-header"><a class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="./loan_details.php?user_id=<?= $loan->user_id ?>&loan_id=<?= $loan->id ?>">Crédit N° <?= $loan->id ?></a></div>
           <div class="card-body">
             <h5 class="card-title">Mensualisation <?= $loan->monthly_payment ?>€</h5>
             <h6 class="card-subtitle mb-2 text-muted">Intêrets : <?= (int)$loan->interest_rate ?> %</h6>
