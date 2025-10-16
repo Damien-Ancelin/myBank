@@ -31,6 +31,9 @@
 ?>
 
 <div class="container">
+
+  <h1 class="my-4">Détails transactions pour Compte N° <?= $account_id ?></h1>
+
   <table class="table">
     <thead>
       <tr>
