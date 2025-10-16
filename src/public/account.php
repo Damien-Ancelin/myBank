@@ -2,6 +2,7 @@
 require dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
 
 use Damien\MyBank\DB;
+use Damien\MyBank\User;
 
 $title = "Mes comptes | myBank";
 
@@ -10,12 +11,16 @@ require '../elements/header.php';
 ?>
 
 <?php
-$database = new DB();
-$accounts = $database->getAccounts(1);
-$loans = $database->getLoans(1);
-// echo '<pre>';
-//   print_r($accounts);
-// echo '</pre>';
+
+if(User::isConnected()) {
+  $database = new DB();
+  $accounts = $database->getAccounts($_SESSION['id']);
+  $loans = $database->getLoans($_SESSION['id']);
+} else {
+  header('Location: ./index.php');
+  exit;
+}
+
 ?>
 
 <div class="container">

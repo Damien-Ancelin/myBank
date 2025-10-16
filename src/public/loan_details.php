@@ -2,6 +2,7 @@
   require dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
 
   use Damien\MyBank\DB;
+  use Damien\MyBank\User;
 
   $title = "Détails du crédit | myBank";
 
@@ -10,24 +11,24 @@
 ?>
 
 <?php
-  $database = new DB();
 
-  if (isset($_GET['user_id']) && isset($_GET['loan_id'])) {
-    $user_id = (int) $_GET['user_id'];
-    $loan_id = (int) $_GET['loan_id'];
-    $transactions = $database->getTransactionToLoanId($user_id, $loan_id);
-    if (!$transactions) {
-      header('Location: ./account.php');
-      die();
+if (User::isConnected()) {
+      $user_id = (int) $_SESSION['id'];
+
+      if(isset($_GET['loan_id'])) {   
+        $loan_id = (int) $_GET['loan_id'];
+        $database = new DB();
+        $transactions = $database->getTransactionToLoanId($user_id, $loan_id);
+
+        if (!$transactions) {
+          header('Location: ./account.php');
+          die();
+        }
     }
   } else {
-    header('Location: ./account.php');
-    die();
+      header('Location: ./index.php');
+      die();
   }
-
-  // echo '<pre>';
-  // print_r($transactions);
-  // echo '</pre>';
 ?>
 
 <div class="container">

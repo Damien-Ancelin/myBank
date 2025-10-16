@@ -142,6 +142,12 @@ This project provides a PostgreSQL database schema and migration system for a ba
    composer start
    ```
 
+   or directly with PHP's built-in server:
+
+   ```bash
+   php -S localhost:8000 -t src/public -d display_errors=1 -d display_startup_errors=1 -d error_reporting=E_ALL
+   ```
+
 ## License 📜
 
 MIT

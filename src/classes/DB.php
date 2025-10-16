@@ -1,6 +1,7 @@
 <?php
 
   namespace Damien\MyBank;
+  use Damien\MyBank\User;
   use \PDO;
   use \PDOException;
   use \Exception;
@@ -46,6 +47,26 @@
         return $pdo;
       } catch (PDOException $e) {
         throw new Exception("Database connection failed: {$e->getMessage()}");
+      }
+    }
+
+    public function login(string $email, string $password) : User|false
+    {
+      try {
+        $pdo = self::connect();
+
+        $query = $pdo->prepare('SELECT * FROM "app_user" WHERE email = :email AND password = :password');
+        $query->execute([
+          ':email' => $email,
+          ':password' => $password
+        ]);
+
+        $query->setFetchMode(PDO::FETCH_CLASS, User::class);
+        $user = $query->fetch();
+
+        return $user;
+      } catch (PDOException $e) {
+        throw new Exception("Error during query for login: {$e->getMessage()}");
       }
     }
 
